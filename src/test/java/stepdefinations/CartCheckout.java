@@ -8,8 +8,12 @@ import io.cucumber.java.en.When;
 import method.bank.CommonMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import utilities.PropertiesUtility;
+
+import java.util.concurrent.TimeUnit;
 
 public class CartCheckout extends CommonMethods{
     /**
@@ -28,10 +32,7 @@ public class CartCheckout extends CommonMethods{
         switchFrames("checkoutFrame");
         element("continue").click();
         selectPaymentOption("credit");
-
-
     }
-
 
     @Then("enters {string}, {string}, {string} and {string}")
     public void entersAnd(String CARD_NUMBER, String CVV, String Expiry,String OTP) throws InterruptedException {
@@ -39,14 +40,14 @@ public class CartCheckout extends CommonMethods{
         element("cardCVV").sendKeys(CVV);
         element("cardExpiryDate").sendKeys(Expiry);
         element("payNow").click();
-        Thread.sleep(5000);
-        switchFrames("paymentParentFrame");
+        Thread.sleep(9000);
+        //driver.manage().timeouts().pageLoadTimeout(50,TimeUnit.SECONDS);
+        switchFrames("paymentFrame");
         element("otp").click();
         element("otp").sendKeys(OTP);
         element("paymentPageOkButton").click();
-
-
-        Assert.assertTrue(element("paymentSuccessMessage").getText().equals("Transaction success"),"Test failed");
+        driver.switchTo().defaultContent();
+        Assert.assertTrue(element("paymentSuccessMessage").isDisplayed(),"Test passed");
 
 
     }

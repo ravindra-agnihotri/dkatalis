@@ -10,7 +10,7 @@ import org.testng.TestRunner;
 
        glue ="stepdefinations",
         features = "src/resources/features/",
-        plugin =  {"pretty", "html:target/cucumber"}
+        plugin =  {"pretty", "html:target/cucumber-reports"}
 
 
 

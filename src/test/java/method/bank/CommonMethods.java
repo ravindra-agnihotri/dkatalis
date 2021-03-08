@@ -6,10 +6,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.PropertiesUtility;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.function.Function;
 
 public class CommonMethods extends BaseClass {
     public static void getSite(String siteURL){
@@ -18,10 +22,11 @@ public class CommonMethods extends BaseClass {
 
     }
 
-    public static WebElement element(String xpath){
-        return driver.findElement(By.xpath(PropertiesUtility.getProperty(xpath)));
-    }
+    public static WebElement element(String xpath) {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(PropertiesUtility.getProperty(xpath))));
 
+    }
     public static void switchFrames(String frameXpath){
         driver.switchTo().frame(driver.findElement(By.xpath(PropertiesUtility.getProperty(frameXpath))));
     }
